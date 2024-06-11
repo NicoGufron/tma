@@ -12,13 +12,13 @@ function App() {
     <>
       <div>
         <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
+          <img src={viteLogo} width={"50px"} className="logo" alt="Vite logo" />
         </a>
         <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
+          <img src={reactLogo} width={"50px"} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h2>Vite + React</h2>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
@@ -28,7 +28,7 @@ function App() {
         </p>
       </div>
       <div className="card">
-        <button onClick={() => WebApp.showAlert(`Hello World! Current count is ${count}`)}></button>
+        <button onClick={() => WebApp.showAlert(`Hello World! Current count is ${count}`)}>Show alert</button>
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
