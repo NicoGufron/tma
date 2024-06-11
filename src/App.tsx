@@ -1,38 +1,23 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
-import WebApp from '@twa-dev/sdk';
+import { CircularProgress } from '@nextui-org/react';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} width={"50px"} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} width={"50px"} className="logo react" alt="React logo" />
-        </a>
+      <div className={"flex flex-col items-center"}>
+        {/* <Card>
+          <CardBody>
+            <div className={"flex flex-row gap-5"}>
+              <span className='flex flex-column'>
+              </span>
+            </div>
+          </CardBody>
+        </Card> */}
+        <CircularProgress></CircularProgress>
+        <p className='pt-10'>We seek to end the suffering. Why you must persist?</p>
       </div>
-      <h2>Vite + React</h2>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <div className="card">
-        <button onClick={() => WebApp.showAlert(`Hello World! Current count is ${count}`)}>Show alert</button>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
