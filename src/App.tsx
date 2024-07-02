@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css'
 import './index.css';
 
-import { CircularProgress } from '@nextui-org/react';
+import { Button, CircularProgress } from '@nextui-org/react';
 
 import notcoin from './assets/notcoin.png';
 
@@ -14,16 +14,21 @@ function App() {
   const [progress, setProgress] = useState(0);
 
   const [points, setPoints] = useState(0.00000);
+  const [balance, setBalance] = useState(0.00000);
+  // const [speed, setSpeed] = useState(100);
   // const [energy, setEnergy] = useState(800);
   // const [maxEnergy, setMaxEnergy] = useState(6500);
   // const [clicks, setClicks] = useState<{ id: Number, x: number, y: number }[]>([]);
   // const pointsToAdd = 12;
   // const energyToReduce = 12;
 
-  // const [tokenCount, setTokenCount] = useState(980);
-
-  var i = 0;
+  var i = 90;
   var limit = 99;
+  
+  const claimEarnings = (earnings: number) => {
+    setPoints(0.00000);
+    setBalance(balance + earnings);
+  } 
 
   // const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
   //   if (energy - energyToReduce < 0) {
@@ -96,14 +101,14 @@ function App() {
             <div className={"w-full z-10 flex flex-col items-center text-white"}>
               <div className={"fixed top-0 left-0 w-full px-4 pt-8 z-10 flex flex-col items-center text-white"}>
                 <div className={"w-full"}>
-                    <p className={"text-sm font-bold"}>In Storage: </p>
+                    <p className={"text-sm font-bold"}>Earnings: </p>
                 </div>
                 <div className="mt-2 text-4xl font-bold flex items-center">
                   <img src={notcoin} width={24} height={24}></img>
                   <span className="ml-2">{points.toFixed(5)}</span>
                 </div>
                 <div className="text-base mt-2 flex items-center text-sm font-bold">
-                  <div onClick={(() => {WebApp.showAlert("YAY")})}>Balance: 2.00000</div>
+                  <div onClick={(() => {WebApp.showAlert("YAY")})}>Balance: {balance.toFixed(5)}</div>
                 </div>
               </div>
             </div>
@@ -127,19 +132,19 @@ function App() {
               </div>
             </div>
             <div className={"fixed bottom-2 left-0 w-full px-4 pb-4 z-10"}>
+              <Button 
+                disableRipple 
+                className={"rounded-2xl cursor-pointer w-full bg-[#404040] text-white text-md font-bold my-4 py-4 h-15"} 
+                style={{border: "1px solid black", boxShadow: "1px 3px black"}}
+                onClick={() => claimEarnings(points)}
+              >
+                  CLAIM EARNINGS
+              </Button>
               <div className={"w-full flex justify-between gap-2"}>
-                {/* <div className={"w-1/3 flex items-center justify-start max-w-32"}>
-                  <div className={"flex items-center justify-center"}>
-                    <div className={"ml-2 text-left"}>
-                      <span className={"text-white text-sm font-bold block"}>{energy}</span>
-                      <span className={"text-white text-sm opacity-75"}>/ {maxEnergy} </span>
-                    </div>
-                  </div>
-                </div> */}
-                <div className={"flex-grow flex items-center w-full text-md"}>
-                  <div className={"w-full bg-[#fba007] py-4 rounded-2xl flex justify-around"} style={{border: "1px solid black", boxShadow: "1px 3px black"}}>
+                <div className={"flex-grow flex items-center w-full text-md font-bold"}>
+                  <div className={"w-full bg-[#404040] py-4 rounded-2xl flex justify-around"} style={{border: "1px solid black", boxShadow: "1px 3px black"}}>
                     <button className={"flex flex-col items-center gap-1"}>
-                      <span>Frens</span>
+                      <a href="/views/friends/"><span>Frens</span></a>
                     </button>
                     <button className="flex flex-col items-center gap-1">
                       {/* <img src={coin} width={24} height={24} alt="High Voltage" /> */}
