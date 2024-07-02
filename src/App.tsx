@@ -6,6 +6,8 @@ import { CircularProgress } from '@nextui-org/react';
 
 import notcoin from './assets/notcoin.png';
 
+import WebApp from '@twa-dev/sdk';
+
 function App() {
 
   const [loading, setLoading] = useState(false);
@@ -80,9 +82,9 @@ function App() {
     <>
       <div>
         {loading ?
-          <div className={"flex flex-col items-center"}>
+          <div className={"flex flex-col min-h-screen items-center justify-center"}>
             <CircularProgress size="lg" value={progress} showValueLabel></CircularProgress>
-            <p className='mt-10 text-center'>We seek to end the suffering. Why you must persist?</p>
+            <p className='mt-10 text-center text-lg'>Loading...</p>
           </div>
           :
           <div className={"bg-gradient-main min-h-screen px-4 flex flex-col items-center justify-between text-white"}>
@@ -101,7 +103,7 @@ function App() {
                   <span className="ml-2">{points.toFixed(5)}</span>
                 </div>
                 <div className="text-base mt-2 flex items-center text-sm font-bold">
-                  Balance: 2.00000
+                  <div onClick={(() => {WebApp.showAlert("YAY")})}>Balance: 2.00000</div>
                 </div>
               </div>
             </div>
