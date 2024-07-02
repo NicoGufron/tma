@@ -1,19 +1,45 @@
 import { useEffect, useState } from 'react';
 import './App.css'
+import './index.css';
 
-import { Button, CircularProgress } from '@nextui-org/react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserGroup, faRocket, faCoins } from '@fortawesome/free-solid-svg-icons';
+import { CircularProgress } from '@nextui-org/react';
+
+import notcoin from './assets/notcoin.png';
 
 function App() {
 
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  const [tokenCount, setTokenCount] = useState(980);
+  const [points, setPoints] = useState(0.00000);
+  // const [energy, setEnergy] = useState(800);
+  // const [maxEnergy, setMaxEnergy] = useState(6500);
+  // const [clicks, setClicks] = useState<{ id: Number, x: number, y: number }[]>([]);
+  // const pointsToAdd = 12;
+  // const energyToReduce = 12;
 
-  var i = 0;
+  // const [tokenCount, setTokenCount] = useState(980);
+
+  var i = 90;
   var limit = 99;
+
+  // const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  //   if (energy - energyToReduce < 0) {
+  //     return;
+  //   }
+
+  //   const rect = e.currentTarget.getBoundingClientRect();
+  //   const x = e.clientX - rect.left;
+  //   const y = e.clientY - rect.top;
+
+  //   setPoints(points + pointsToAdd);
+  //   setEnergy(energy - energyToReduce < 0 ? 0 : energy - energyToReduce);
+  //   setClicks([...clicks, { id: Date.now(), x, y }]);
+  // }
+
+  // const handleAnimationEnd = (id: number) => {
+  //   setClicks((prevClicks) => prevClicks.filter(click => click.id !== id));
+  // }
 
   useEffect(() => {
     setLoading(true);
@@ -30,6 +56,23 @@ function App() {
     }, 100)
   }, [])
 
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setEnergy((prevEnergy) => Math.min(prevEnergy + 1, maxEnergy));
+  //   }, 100);
+
+  //   return () => clearInterval(interval);
+
+  // })
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPoints((prevPoints) => Math.min(prevPoints + 0.00001, 999999));   
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [])
+
   return (
     <>
       <div>
@@ -39,36 +82,77 @@ function App() {
             <p className='mt-10 text-center'>We seek to end the suffering. Why you must persist?</p>
           </div>
           :
-          <div className={"flex flex-col items-center"}>
-            <div className={"flex flex-row justify-center items-center gap-5"}>
-              <div className={"w-6 h-6 rounded-full bg-red-600"}></div>
-              <h3 className={"text-4xl font-bold text-white"}>{tokenCount}</h3>
+          <div className={"bg-gradient-main min-h-screen px-4 flex flex-col items-center justify-between text-white"}>
+            <div className={"absolute inset-0 h-1/2 bg-gradient-overlay z-0"}></div>
+            <div className={"absolute inset-0 flex items-center justify-center z-0"}>
+              <div className={'radial-gradient-overlay'}></div>
             </div>
-            <Button disableRipple className={"w-40 h-40 rounded-full mt-20"} onClick={() => setTokenCount((tokenCount) => tokenCount + 1)}>
-              <p className={"text-5xl font-bold"}>+</p>
-            </Button>
-            <div className={"flex flex-row justify-between w-60 bg-slate-800 mt-5 rounded-md"}>
-              
-                <Button disableAnimation className={"bg-transparent"}>
-                  <div className={"flex flex-col"}>
-                    <FontAwesomeIcon icon={faRocket} color='white' />
-                    <p className={"text-white font-semibold"}>Boosts</p>
+
+            <div className={"w-full z-10 flex flex-col items-center text-white"}>
+              <div className={"fixed top-0 left-0 w-full px-4 pt-8 z-10 flex flex-col items-center text-white"}>
+                <div className={"w-full cursor-pointer"}>
+                  <div className={"bg-[#1f1f1f] text-center py-2 rounded-xl"}>
+                    <p className={"text-sm"}>Join squad</p>
                   </div>
-                </Button>
-                <Button className={"bg-transparent"}>
-                  <div className={"flex flex-col"}>
-                    <FontAwesomeIcon icon={faCoins} color='white' />
-                    <p className={"text-white font-semibold"}>Earn</p>
-                  </div>
-                </Button>
-                <Button className={"bg-transparent"}>
-                  <div className={"flex flex-col"}>
-                    <FontAwesomeIcon icon={faUserGroup} color='white' />
-                    <p className={"text-white font-semibold"}>Frens</p>
-                  </div>
-                </Button>
+                </div>
+                <div className="mt-6 text-4xl font-bold flex items-center">
+                  <img src={notcoin} width={24} height={24}></img>
+                  <span className="ml-2">{points.toFixed(5)}</span>
+                </div>
+                <div className="text-base mt-2 flex items-center">
+                </div>
               </div>
             </div>
+            <div className={"flex-grow flex items-center justify-center"}>
+              <div className={"relative mt-20"}>
+                <img src={notcoin} width={180} height={180} />
+                {/* {clicks.map((click) => (
+                  <div
+                    // key={click.id}
+                    className={"absolute text-5xl font-bold opacity-0"}
+                    style={{
+                      top: `${click.y - 42}px`,
+                      left: `${click.x - 28}px`,
+                      animation: `float 1s ease-out`
+                    }}
+                  // onAnimationEnd={() => handleAnimationEnd(click.id)}
+                  >
+                    12
+                  </div>
+                ))} */}
+              </div>
+            </div>
+            <div className={"fixed bottom-2 left-0 w-full px-4 pb-4 z-10"}>
+              <div className={"w-full flex justify-between gap-2"}>
+                {/* <div className={"w-1/3 flex items-center justify-start max-w-32"}>
+                  <div className={"flex items-center justify-center"}>
+                    <div className={"ml-2 text-left"}>
+                      <span className={"text-white text-sm font-bold block"}>{energy}</span>
+                      <span className={"text-white text-sm opacity-75"}>/ {maxEnergy} </span>
+                    </div>
+                  </div>
+                </div> */}
+                <div className={"flex-grow flex items-center w-full text-sm font-bold"}>
+                  <div className={"w-full bg-[#fad258] py-4 rounded-2xl flex justify-around"}>
+                    <button className={"flex flex-col items-center gap-1"}>
+                      <span>Frens</span>
+                    </button>
+                    <button className="flex flex-col items-center gap-1">
+                      {/* <img src={coin} width={24} height={24} alt="High Voltage" /> */}
+                      <span>Earn</span>
+                    </button>
+                    <button className="flex flex-col items-center gap-1">
+                      {/* <img src={rocket} width={24} height={24} alt="High Voltage" /> */}
+                      <span>Boosts</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* <div className={"w-full bg-[#f9c035] rounded-full mt-4"}>
+              <div className="{bg-gradient-to-r from-[#f3c45a] to-[#fffad0] h-4 rounded-full}" style={{ width: `${(energy / maxEnergy) * 100}%` }}></div>
+            </div> */}
+          </div>
         }
 
       </div>

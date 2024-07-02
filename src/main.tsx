@@ -7,6 +7,7 @@ import WebApp from '@twa-dev/sdk';
 import { NextUIProvider } from '@nextui-org/react';
 
 WebApp.ready();
+WebApp.expand();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
