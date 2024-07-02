@@ -20,7 +20,7 @@ function App() {
 
   // const [tokenCount, setTokenCount] = useState(980);
 
-  var i = 90;
+  var i = 0;
   var limit = 99;
 
   // const handleClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -66,11 +66,14 @@ function App() {
   // })
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setPoints((prevPoints) => Math.min(prevPoints + 0.00001, 999999));   
-    }, 100);
+    if (!loading) {
 
-    return () => clearInterval(interval);
+      const interval = setInterval(() => {
+        setPoints((prevPoints) => Math.min(prevPoints + 0.00001, 999999));   
+      }, 100);
+      
+      return () => clearInterval(interval);
+    }
   }, [])
 
   return (
@@ -90,21 +93,20 @@ function App() {
 
             <div className={"w-full z-10 flex flex-col items-center text-white"}>
               <div className={"fixed top-0 left-0 w-full px-4 pt-8 z-10 flex flex-col items-center text-white"}>
-                <div className={"w-full cursor-pointer"}>
-                  <div className={"bg-[#1f1f1f] text-center py-2 rounded-xl"}>
-                    <p className={"text-sm"}>Join squad</p>
-                  </div>
+                <div className={"w-full"}>
+                    <p className={"text-sm font-bold"}>In Storage: </p>
                 </div>
-                <div className="mt-6 text-4xl font-bold flex items-center">
+                <div className="mt-2 text-4xl font-bold flex items-center">
                   <img src={notcoin} width={24} height={24}></img>
                   <span className="ml-2">{points.toFixed(5)}</span>
                 </div>
-                <div className="text-base mt-2 flex items-center">
+                <div className="text-base mt-2 flex items-center text-sm font-bold">
+                  Balance: 2.00000
                 </div>
               </div>
             </div>
             <div className={"flex-grow flex items-center justify-center"}>
-              <div className={"relative mt-20"}>
+              <div className={"relative mt-10"}>
                 <img src={notcoin} width={180} height={180} />
                 {/* {clicks.map((click) => (
                   <div
@@ -132,8 +134,8 @@ function App() {
                     </div>
                   </div>
                 </div> */}
-                <div className={"flex-grow flex items-center w-full text-sm font-bold"}>
-                  <div className={"w-full bg-[#fad258] py-4 rounded-2xl flex justify-around"}>
+                <div className={"flex-grow flex items-center w-full text-md"}>
+                  <div className={"w-full bg-[#fba007] py-4 rounded-2xl flex justify-around"} style={{border: "1px solid black", boxShadow: "1px 3px black"}}>
                     <button className={"flex flex-col items-center gap-1"}>
                       <span>Frens</span>
                     </button>
