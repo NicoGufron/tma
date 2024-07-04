@@ -2,21 +2,11 @@ import { Button, Link } from "@nextui-org/react";
 import "../App.css";
 import "../index.css"
 
-// import { initUtils } from '@tma.js/sdk'; 
-
-// const hash = window.location.hash.slice(1);
-// console.log(`Hash: ${hash}`);
-
-// const params = new URLSearchParams(hash);
-// console.log(params.get('tgWebAppVersion'));
-
-// const utils = initUtils();
-
 function Friends() {
     return (
         <>
-            <div className={"bg-[#212121] min-h-screen flex flex-col items-center text-white px-12"}>
-                <div className={"flex flex-col p-4  my-8 bg-[#404040] w-full rounded-lg"} style={{ border: "1px solid black", boxShadow: "0px 3px black" }}>
+            <div className={"bg-[#212121] min-h-screen flex flex-col items-center text-white px-4"}>
+                <div className={"flex flex-col p-4 my-8 bg-[#404040] w-full rounded-lg"} style={{ border: "1px solid black", boxShadow: "0px 3px black" }}>
 
                     <h3>Invite Friends!</h3>
                     <div className={"flex flex-col items-center rounded-lg border-solid border-1 border-black mt-4 mx-4 bg-[#212121]"}>

@@ -1,8 +1,8 @@
 import { Telegraf } from 'telegraf';
-const TOKEN = "7213033390:AAFfYyiCZwRWSOqUQS2wnu82UXIZau1JMUU";
+
+const TOKEN = "7213033390:AAEzxrUMwzMwVOKSUt58ZG8D8Rw3apseivc";
 
 const bot = new Telegraf(TOKEN);
-
 
 bot.start((ctx) => {
     const username = ctx.message.username || ctx.chat.username;

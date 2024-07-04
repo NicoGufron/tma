@@ -7,6 +7,9 @@ import WebApp from "@twa-dev/sdk";
 import '../App.css'
 import '../index.css';
 
+import { initializeApp } from 'firebase/app';
+import { getFirestore, collection, getDoc, setDoc, doc } from 'firebase/firestore';
+
 function Homepage() {
 
     const [loading, setLoading] = useState(false);
@@ -16,6 +19,47 @@ function Homepage() {
     const [balance, setBalance] = useState(0.00000);
     var i = 90;
     var limit = 99;
+
+    WebApp.setHeaderColor('#202020');
+
+    const webAppUser = WebApp.initDataUnsafe.user;
+    
+    const firebaseConfig = {
+        apiKey: "AIzaSyALEGfM6seT7ZKFX7qHBnFaMXzkufMwtb4",
+        authDomain: "teleminiapp-1f431.firebaseapp.com",
+        projectId: "teleminiapp-1f431",
+        storageBucket: "teleminiapp-1f431.appspot.com",
+        messagingSenderId: "206057704380",
+        appId: "1:206057704380:web:e3b1605006b2868c4139b9",
+        measurementId: "G-V78GZWKCMR"
+      };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const addUsernametoFirestore = async () => {
+        try {
+            await setDoc(doc(db, 'users', `tmaId${webAppUser?.id}`), {
+                id: webAppUser?.id,
+                user: webAppUser?.username,
+                totalBalance : balance.toFixed(5),
+            });
+            WebApp.showAlert("Username added;");
+        } catch (e) {
+            WebApp.showAlert(`${e}`)
+        }
+    }
+
+    const getDataFromFirestore = async () => {
+        const docRef = doc(db, "users", `tmaId${webAppUser?.id}`);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            // setBalance(docSnap.data().balance);
+        } else {
+
+        }
+    }
 
     const claimEarnings = (earnings: number) => {
         setPoints(0.00000);
@@ -34,7 +78,9 @@ function Homepage() {
                     setLoading(false);
                 }, 1000)
             }
-        }, 100)
+        }, 100);
+
+        getDataFromFirestore();
     }, [])
 
     useEffect(() => {
@@ -78,29 +124,18 @@ function Homepage() {
                         </div>
                         <div className={"flex-grow flex items-center justify-center"}>
                             <div className={"relative mt-10"}>
-                                <img src={notcoin} width={180} height={180} />
-                                {/* {clicks.map((click) => (
-                  <div
-                    // key={click.id}
-                    className={"absolute text-5xl font-bold opacity-0"}
-                    style={{
-                      top: `${click.y - 42}px`,
-                      left: `${click.x - 28}px`,
-                      animation: `float 1s ease-out`
-                    }}
-                  // onAnimationEnd={() => handleAnimationEnd(click.id)}
-                  >
-                    12
-                  </div>
-                ))} */}
+                                <img src={notcoin} width={140} height={140} />
                             </div>
                         </div>
                         <div className={"fixed bottom-2 left-0 w-full px-4 pb-4 z-10"}>
                             <Button
                                 disableRipple
-                                className={"rounded-2xl cursor-pointer w-full bg-[#404040] text-white text-md font-bold my-4 py-4 h-15"}
+                                className={"rounded-2xl cursor-pointer w-full bg-[#404040] text-white text-sm font-bold my-4 py-4 h-15"}
                                 style={{ border: "1px solid black", boxShadow: "1px 3px black" }}
-                                onClick={() => claimEarnings(points)}
+                                onClick={() => {
+                                    addUsernametoFirestore();
+                                    claimEarnings(points)
+                                }}
                             >
                                 CLAIM EARNINGS
                             </Button>
@@ -122,9 +157,6 @@ function Homepage() {
                                 </div>
                             </div>
                         </div>
-                        {/* <div className={"w-full bg-[#f9c035] rounded-full mt-4"}>
-              <div className="{bg-gradient-to-r from-[#f3c45a] to-[#fffad0] h-4 rounded-full}" style={{ width: `${(energy / maxEnergy) * 100}%` }}></div>
-            </div> */}
                     </div>
                 }
 
