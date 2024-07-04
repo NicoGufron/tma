@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button, Link, CircularProgress } from "@nextui-org/react";
+import { addDataToFirestore, getBalanceFromId } from "../utils/functions";
 
 import notcoin from '../assets/notcoin.png';
 import WebApp from "@twa-dev/sdk";
@@ -7,63 +8,26 @@ import WebApp from "@twa-dev/sdk";
 import '../App.css'
 import '../index.css';
 
-import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDoc, setDoc, doc } from 'firebase/firestore';
-
 function Homepage() {
 
+    const [balance, setBalance] = useState(0.00000);
     const [loading, setLoading] = useState(false);
     const [progress, setProgress] = useState(0);
 
     const [points, setPoints] = useState(0.00000);
-    const [balance, setBalance] = useState(0.00000);
     var i = 90;
     var limit = 99;
 
-    WebApp.setHeaderColor('#202020');
+    // WebApp.setHeaderColor('#202020');
 
     const webAppUser = WebApp.initDataUnsafe.user;
-    
-    const firebaseConfig = {
-        apiKey: "AIzaSyALEGfM6seT7ZKFX7qHBnFaMXzkufMwtb4",
-        authDomain: "teleminiapp-1f431.firebaseapp.com",
-        projectId: "teleminiapp-1f431",
-        storageBucket: "teleminiapp-1f431.appspot.com",
-        messagingSenderId: "206057704380",
-        appId: "1:206057704380:web:e3b1605006b2868c4139b9",
-        measurementId: "G-V78GZWKCMR"
-      };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    const addUsernametoFirestore = async () => {
-        try {
-            await setDoc(doc(db, 'users', `tmaId${webAppUser?.id}`), {
-                id: webAppUser?.id,
-                user: webAppUser?.username,
-                totalBalance : balance.toFixed(5),
-            });
-            WebApp.showAlert("Username added;");
-        } catch (e) {
-            WebApp.showAlert(`${e}`)
-        }
-    }
-
-    const getDataFromFirestore = async () => {
-        const docRef = doc(db, "users", `tmaId${webAppUser?.id}`);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-            // setBalance(docSnap.data().balance);
-        } else {
-
-        }
-    }
-
-    const claimEarnings = (earnings: number) => {
+    const claimEarnings = async (earnings: number) => {
         setPoints(0.00000);
         setBalance(balance + earnings);
+        // await addDataToFirestore("1", "Ocinawa", balance);
+
+        await addDataToFirestore(`${webAppUser?.id}`, `${webAppUser?.username}`, earnings);
     }
 
     useEffect(() => {
@@ -80,7 +44,11 @@ function Homepage() {
             }
         }, 100);
 
-        getDataFromFirestore();
+        if (!loading) {
+            getBalanceFromId(`${webAppUser?.id}`).then((value) => {
+                setBalance(value);  
+            })
+        }
     }, [])
 
     useEffect(() => {
@@ -92,7 +60,8 @@ function Homepage() {
 
             return () => clearInterval(interval);
         }
-    }, [])
+    }, []);
+
     return (
         <>
             <div>
@@ -133,7 +102,6 @@ function Homepage() {
                                 className={"rounded-2xl cursor-pointer w-full bg-[#404040] text-white text-sm font-bold my-4 py-4 h-15"}
                                 style={{ border: "1px solid black", boxShadow: "1px 3px black" }}
                                 onClick={() => {
-                                    addUsernametoFirestore();
                                     claimEarnings(points)
                                 }}
                             >
