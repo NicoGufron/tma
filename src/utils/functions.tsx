@@ -17,7 +17,7 @@ const db = getFirestore(app);
 
 const addDataToFirestore = async (id : string, username : string, balance : number) => {
     try {
-        await setDoc(doc(db, 'users', '1'), {
+        await setDoc(doc(db, 'users', `tmaId${id}`), {
             id: id,
             user: username,
             totalBalance: balance
