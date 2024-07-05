@@ -27,3 +27,6 @@ firebase.json
 firestore.indexes.json
 .firebaserc
 firestore.rules
+
+.env
+.vite-env.d.ts

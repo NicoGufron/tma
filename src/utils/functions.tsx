@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, getDoc, setDoc, doc } from 'firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyALEGfM6seT7ZKFX7qHBnFaMXzkufMwtb4",
+    apiKey: import.meta.env.VITE_FIREBASE_KEY,
     authDomain: "teleminiapp-1f431.firebaseapp.com",
     projectId: "teleminiapp-1f431",
     storageBucket: "teleminiapp-1f431.appspot.com",

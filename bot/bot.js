@@ -1,8 +1,9 @@
+import { config } from 'dotenv';
 import { Markup, Telegraf } from 'telegraf';
 
-const TOKEN = "7213033390:AAEzxrUMwzMwVOKSUt58ZG8D8Rw3apseivc";
+const dotenv = config({path: "../.env"});
 
-const bot = new Telegraf(TOKEN);
+const bot = new Telegraf(process.env.TOKEN_BOT);
 
 const keyboard = Markup.inlineKeyboard([
     [
