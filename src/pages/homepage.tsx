@@ -27,7 +27,7 @@ function Homepage() {
         setBalance(balance + earnings);
         // await addDataToFirestore("1", "Ocinawa", balance);
 
-        await addDataToFirestore(`${webAppUser?.id}`, `${webAppUser?.username}`, balance);
+        await addDataToFirestore(`${webAppUser?.id}`, `${webAppUser?.username}`, balance + earnings);
     }
 
     useEffect(() => {
