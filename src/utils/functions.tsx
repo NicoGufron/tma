@@ -43,4 +43,15 @@ const getBalanceFromId = async (id : string) => {
      }
 }
 
-export { getBalanceFromId, addDataToFirestore }
+const getReferralsFromId = async (id : string) => {
+    const referralDocRef = doc(db, "referrals", `tmaId${id}`);
+    const docSnap = await getDoc(referralDocRef);
+
+    if (docSnap.exists()) {
+        return docSnap.data().users;
+    } else {
+        return 0;
+    }
+}
+
+export { getBalanceFromId, addDataToFirestore, getReferralsFromId }

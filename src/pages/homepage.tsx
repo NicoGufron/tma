@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button, Link, CircularProgress } from "@nextui-org/react";
+import { Button, CircularProgress } from "@nextui-org/react";
 import { addDataToFirestore, getBalanceFromId } from "../utils/functions";
 
 import notcoin from '../assets/notcoin.png';
@@ -7,6 +7,7 @@ import WebApp from "@twa-dev/sdk";
 
 import '../App.css'
 import '../index.css';
+import BottomNav from "../components/BottomNav";
 
 function Homepage() {
 
@@ -26,7 +27,7 @@ function Homepage() {
         setPoints(0.00000);
         setBalance(balance + earnings);
         // await addDataToFirestore("1", "Ocinawa", balance);
-
+        
         await addDataToFirestore(`${webAppUser?.id}`, `${webAppUser?.username}`, balance + earnings);
     }
 
@@ -107,23 +108,7 @@ function Homepage() {
                             >
                                 CLAIM EARNINGS
                             </Button>
-                            <div className={"w-full flex justify-between gap-2"}>
-                                <div className={"flex-grow flex items-center w-full text-md font-bold"}>
-                                    <div className={"w-full bg-[#404040] py-4 rounded-2xl flex justify-around"} style={{ border: "1px solid black", boxShadow: "1px 3px black" }}>
-                                        <button className={"flex flex-col items-center gap-1"}>
-                                            <Link style={{textDecoration: "none"}} className={"text-white"} href='/tma/friends/'>Frens</Link>
-                                        </button>
-                                        <button className="flex flex-col items-center gap-1">
-                                            {/* <img src={coin} width={24} height={24} alt="High Voltage" /> */}
-                                            <Link style={{textDecoration: "none"}} className={"text-white"} href="/tma/">Earn</Link>
-                                        </button>
-                                        <button className="flex flex-col items-center gap-1">
-                                            {/* <img src={rocket} width={24} height={24} alt="High Voltage" /> */}
-                                            <span>Boosts</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                            <BottomNav></BottomNav>
                         </div>
                     </div>
                 }
