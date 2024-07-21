@@ -1,7 +1,7 @@
 import { config } from 'dotenv';
 import { initializeApp } from 'firebase/app';
 import { Markup, Telegraf } from 'telegraf';
-import { getFirestore, setDoc, doc, updateDoc, getDoc } from 'firebase/firestore';
+import { getFirestore, setDoc, doc, updateDoc, getDoc, arrayUnion } from 'firebase/firestore';
 
 const dotenv = config({ path: "../.env" });
 
@@ -33,44 +33,41 @@ async function getReferralsFromId(userId) {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-        return docSnap.data().users;
+        return docSnap.data().users.length;
     } else {
         return 0;
     }
 }
 
 // tambahkan referral berdasarkan userid, dan user sekarang
-async function addReferral(referralUserId, currentUser) {
-    const referralDocRef = doc(db, "referrals", referralUserId);
-    const usersDocRef = doc(db, "users", referralUserId);
-
-    let dataReferral = getReferralsFromId(referralUserId);
-    console.log(dataReferral);
-
-    if (dataReferral.length > 0) {
-        try {
-            await setDoc(usersDocRef, {
-                users: {
+async function addReferral(currentUser, referralUser) {
+    console.log(referralUser);
+    console.log(currentUser);
+    const referralUserRef = doc(db, `referrals`, `tmaId${referralUser.id}`);
+    const totalReferrals = await getReferralsFromId(referralUser.id);
+    console.log("Total Ref: ", totalReferrals)
+    try {
+        // jika total referrals melebihi dari 1
+        if (totalReferrals > 0) {
+            // dari firestore, kalau ada data yang sama, ga bakal di add.
+            await updateDoc(referralUserRef, {
+                "users" : arrayUnion({
                     id: currentUser.id,
-                    username: currentUser.username
-                }
-            })
-        } catch (e) {
-            console.log("failed: ", e);
-        }
-    } else {
-        try {
-            await setDoc(referralDocRef, {
-                users : {
+                    username : currentUser.username,
+                })
+            }, { merge: true}).then(() => console.log("berhasil")
+        ).catch((e) => console.log(e));
+        //tambah biasa
+        } else {
+            await setDoc(referralUserRef, {
+                "users" : [{
                     id: currentUser.id,
-                    username: currentUser.username,
-                }
-            }).then((value) => {
-                console.log("success: ", value);
+                    username : currentUser.username,
+                }]
             })
-        } catch (e) {
-            console.log("failed: ", e);
         }
+    } catch (e) {
+        console.log(e);
     }
 }
 
@@ -78,9 +75,14 @@ bot.start((ctx) => {
     const username = ctx.message.username || ctx.chat.username;
     const user = ctx.chat;
     let referralUserId = ctx.payload;
+    // let referralUserId = {
+    //     id : "1144513351",
+    //     username: "Ocinawa"
+    // }
+    console.log(ctx.payload);
 
     if (ctx.payload.length > 0 && ctx.payload != "") {
-        addReferral(referralUserId, user);
+    addReferral(user, referralUserId);
     }
 
     ctx.replyWithHTML(`Hello @${username}! 👋🏻\n\nWelcome to <b>TMA</b>!\n\nThis bot is only for testing purposes only and does not have any correct functionalities, but you can check the TMA button below.\n\nYou are welcome to message me <b>@Ocinawa</b>`, { parse_mode: 'html', reply_markup: keyboard.reply_markup });
