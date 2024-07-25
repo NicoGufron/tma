@@ -41,11 +41,8 @@ async function getReferralsFromId(userId) {
 
 // tambahkan referral berdasarkan userid, dan user sekarang
 async function addReferral(currentUser, referralUser) {
-    console.log(referralUser);
-    console.log(currentUser);
     const referralUserRef = doc(db, `referrals`, `tmaId${referralUser.id}`);
     const totalReferrals = await getReferralsFromId(referralUser.id);
-    console.log("Total Ref: ", totalReferrals)
     try {
         // jika total referrals melebihi dari 1
         if (totalReferrals > 0) {
@@ -75,14 +72,9 @@ bot.start((ctx) => {
     const username = ctx.message.username || ctx.chat.username;
     const user = ctx.chat;
     let referralUserId = ctx.payload;
-    // let referralUserId = {
-    //     id : "1144513351",
-    //     username: "Ocinawa"
-    // }
-    console.log(ctx.payload);
 
     if (ctx.payload.length > 0 && ctx.payload != "") {
-    addReferral(user, referralUserId);
+        addReferral(user, referralUserId);
     }
 
     ctx.replyWithHTML(`Hello @${username}! 👋🏻\n\nWelcome to <b>TMA</b>!\n\nThis bot is only for testing purposes only and does not have any correct functionalities, but you can check the TMA button below.\n\nYou are welcome to message me <b>@Ocinawa</b>`, { parse_mode: 'html', reply_markup: keyboard.reply_markup });

@@ -47,7 +47,11 @@ function Homepage() {
 
         if (!loading) {
             getBalanceFromId(`${webAppUser?.id}`).then((value) => {
-                setBalance(value);  
+                if (value !== "" || value !== "undefined" ) {
+                    setBalance(value);  
+                } else {
+                    WebApp.showAlert("Something went wrong, please try again later.")
+                }
             })
         }
     }, [])
