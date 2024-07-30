@@ -41,8 +41,8 @@ async function getReferralsFromId(userId) {
 
 // tambahkan referral berdasarkan userid, dan user sekarang
 async function addReferral(currentUser, referralUser) {
-    const referralUserRef = doc(db, `referrals`, `tmaId${referralUser.id}`);
-    const totalReferrals = await getReferralsFromId(referralUser.id);
+    const referralUserRef = doc(db, `referrals`, `tmaId${referralUser}`);
+    const totalReferrals = await getReferralsFromId(referralUser);
     try {
         // jika total referrals melebihi dari 1
         if (totalReferrals > 0) {
@@ -52,7 +52,7 @@ async function addReferral(currentUser, referralUser) {
                     id: currentUser.id,
                     username : currentUser.username,
                 })
-            }, { merge: true}).then(() => console.log("berhasil")
+            }, { merge: true}).then(() => console.log("berhasil merge")
         ).catch((e) => console.log(e));
         //tambah biasa
         } else {
@@ -74,6 +74,8 @@ bot.start((ctx) => {
     let referralUserId = ctx.payload;
 
     if (ctx.payload.length > 0 && ctx.payload != "") {
+        referralUserId = referralUserId.substring(5);
+        console.log("Masuk referral : ", referralUserId);
         addReferral(user, referralUserId);
     }
 
