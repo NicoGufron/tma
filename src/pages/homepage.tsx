@@ -73,21 +73,21 @@ function Homepage() {
                 {loading ?
                     <div className={"flex flex-col min-h-screen items-center justify-center"}>
                         <CircularProgress size="lg" value={progress} showValueLabel></CircularProgress>
-                        <p className='mt-10 text-center text-lg'>Loading...</p>
+                        <p className='mt-10 text-center text-lg font-bold'>Loading...</p>
                     </div>
                     :
-                    <div className={"bg-gradient-main min-h-screen px-4 flex flex-col items-center justify-between text-white"}>
+                    <div className={"bg-gradient-main min-h-screen flex flex-col items-center justify-between text-black"}>
                         <div className={"absolute inset-0 h-1/2 bg-gradient-overlay z-0"}></div>
                         <div className={"absolute inset-0 flex items-center justify-center z-0"}>
                             <div className={'radial-gradient-overlay'}></div>
                         </div>
 
-                        <div className={"w-full z-10 flex flex-col items-center text-white"}>
-                            <div className={"fixed top-0 left-0 w-full px-4 pt-8 z-10 flex flex-col items-center text-white"}>
+                        <div className={"w-full z-10 flex flex-col items-center text-black"}>
+                            <div className={"fixed top-0 left-0 w-full px-4 pt-8 z-10 flex flex-col items-center text-black"}>
                                 <div className={"w-full"}>
                                     <p className={"text-sm font-bold"}>Earnings: </p>
                                 </div>
-                                <div className="mt-2 text-4xl font-bold flex items-center">
+                                <div className="mt-2 text-3xl font-bold flex items-center">
                                     <img src={notcoin} width={24} height={24}></img>
                                     <span className="ml-2">{points.toFixed(5)}</span>
                                 </div>
@@ -98,22 +98,22 @@ function Homepage() {
                         </div>
                         <div className={"flex-grow flex items-center justify-center"}>
                             <div className={"relative mt-10"}>
-                                <img src={notcoin} width={140} height={140} />
+                                <img src={notcoin} width={120} height={120} />
                             </div>
                         </div>
-                        <div className={"fixed bottom-2 left-0 w-full px-4 pb-4 z-10"}>
+                        <div className={"fixed bottom-4 left-0 w-full px-4 pb-16 z-10"}>
                             <Button
                                 disableRipple
-                                className={"rounded-2xl cursor-pointer w-full bg-[#404040] text-white text-sm font-bold my-4 py-4 h-15"}
-                                style={{ border: "1px solid black", boxShadow: "1px 3px black" }}
+                                className={"rounded-lg cursor-pointer w-full bg-[#CA3A3A] text-white text-sm font-bold my-4 py-4 h-15 border-1 border-black"}
+                                style={{ boxShadow: "0px 4px black", letterSpacing: "0.35px" }}
                                 onClick={() => {
                                     claimEarnings(points)
                                 }}
                             >
                                 CLAIM EARNINGS
                             </Button>
-                            <BottomNav></BottomNav>
                         </div>
+                        <BottomNav></BottomNav>
                     </div>
                 }
 
