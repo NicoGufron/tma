@@ -18,8 +18,8 @@ function Homepage() {
     const [points, setPoints] = useState(0.00000);
     var i = 90;
     var limit = 99;
-
-    // WebApp.setHeaderColor('#202020');
+    
+    WebApp.setHeaderColor('#FFFEDF');
 
     const webAppUser = WebApp.initDataUnsafe.user;
 
