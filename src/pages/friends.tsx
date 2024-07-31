@@ -27,6 +27,7 @@ function Friends() {
     type User = {
         id: number,
         username: string,
+        profilePhoto : string,
     }
 
     const [totalReferrals, setTotalReferrals] = useState(0);
@@ -85,9 +86,10 @@ function Friends() {
                     </div>
                     <div className={"flex flex-col items-start"}>
                         <h3 className={"text-lg font-bold"}>List of Meows</h3>
-                        <div className={"flex flex-col my-4 list-none"}>
+                        <div className={"w-full flex flex-col my-4 list-none"}>
                             {friends.length === 0 ? (<p className={"text-center"}>You have no friends</p>) : friends.map(friend => (
-                                <li className={"text-left border-2 border-white rounded-lg bg-[#001E42] font-bold p-4 my-2 text-white"} key={friend.id}>
+                                <li className={"flex flex-row items-center text-left border-2 border-[#A0937D] rounded-lg bg-[#F8EDE3] font-bold p-4 my-2 text-black"} key={friend.id}>
+                                    <img src={friend.profilePhoto} className={"rounded-full mr-4 bg-cover"} width={"50"} height={"50"}/>
                                     {friend.username}
                                 </li>
                             ))}

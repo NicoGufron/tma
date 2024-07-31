@@ -2,10 +2,12 @@ import { NextUIProvider } from "@nextui-org/react";
 import { Route, Routes, useNavigate } from "react-router-dom"
 import Homepage from "./pages/homepage";
 import Friends from "./pages/friends";
+import WebApp from "@twa-dev/sdk";
 
 function App() {
 
   const navigate = useNavigate();
+  WebApp.setHeaderColor('#FFFEDF');
 
   return (
     <>

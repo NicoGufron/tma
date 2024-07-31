@@ -33,24 +33,34 @@ async function getReferralsFromId(userId) {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-        return docSnap.data().users.length;
+        return docSnap.data().users;
     } else {
         return 0;
     }
 }
 
+async function getUserProfilePictureLink(ctx, userId) {
+    const userData = await ctx.telegram.getUserProfilePhotos(userId, 0);
+
+    const fileId = userData.photos[0][0].file_id;
+    const fileLink = await ctx.telegram.getFileLink(fileId);
+    return `${fileLink.href}`;
+}
+
 // tambahkan referral berdasarkan userid, dan user sekarang
-async function addReferral(currentUser, referralUser) {
+async function addReferral(ctx, referralUser) {
     const referralUserRef = doc(db, `referrals`, `tmaId${referralUser}`);
     const totalReferrals = await getReferralsFromId(referralUser);
+    const profilePhotoLink = await getUserProfilePictureLink(ctx, ctx.chat.id);
     try {
         // jika total referrals melebihi dari 1
         if (totalReferrals > 0) {
             // dari firestore, kalau ada data yang sama, ga bakal di add.
             await updateDoc(referralUserRef, {
                 "users" : arrayUnion({
-                    id: currentUser.id,
-                    username : currentUser.username,
+                    id: ctx.chat.id,
+                    username : ctx.chat.username,
+                    profilePhoto : profilePhotoLink
                 })
             }, { merge: true}).then(() => console.log("berhasil merge")
         ).catch((e) => console.log(e));
@@ -58,8 +68,9 @@ async function addReferral(currentUser, referralUser) {
         } else {
             await setDoc(referralUserRef, {
                 "users" : [{
-                    id: currentUser.id,
-                    username : currentUser.username,
+                    id: ctx.chat.id,
+                    username : ctx.chat.username,
+                    profilePhoto : profilePhotoLink
                 }]
             })
         }
@@ -70,13 +81,14 @@ async function addReferral(currentUser, referralUser) {
 
 bot.start((ctx) => {
     const username = ctx.message.username || ctx.chat.username;
-    const user = ctx.chat;
+    const user = ctx;
     let referralUserId = ctx.payload;
 
     if (ctx.payload.length > 0 && ctx.payload != "") {
         referralUserId = referralUserId.substring(5);
         console.log("Masuk referral : ", referralUserId);
-        addReferral(user, referralUserId);
+        // getUserProfilePictureLink(ctx, ctx.chat.id);
+        addReferral(ctx, referralUserId);
     }
 
     ctx.replyWithHTML(`Hello @${username}! 👋🏻\n\nWelcome to <b>TMA</b>!\n\nThis bot is only for testing purposes only and does not have any correct functionalities, but you can check the TMA button below.\n\nYou are welcome to message me <b>@Ocinawa</b>`, { parse_mode: 'html', reply_markup: keyboard.reply_markup });

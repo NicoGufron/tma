@@ -19,7 +19,6 @@ function Homepage() {
     var i = 90;
     var limit = 99;
     
-    WebApp.setHeaderColor('#FFFEDF');
 
     const webAppUser = WebApp.initDataUnsafe.user;
 
