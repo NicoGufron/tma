@@ -49,33 +49,57 @@ async function getUserProfilePictureLink(ctx, userId) {
 
 // tambahkan referral berdasarkan userid, dan user sekarang
 async function addReferral(ctx, referralUser) {
+
     const referralUserRef = doc(db, `referrals`, `tmaId${referralUser}`);
     const totalReferrals = await getReferralsFromId(referralUser);
     const profilePhotoLink = await getUserProfilePictureLink(ctx, ctx.chat.id);
+
     try {
+
+        // ambil referralDoc sesuai tmaId yang di refer
+        const referralDoc = await getDoc(doc(db, `referrals`, `tmaId${ctx.chat.id}`));
+
+        // pengecekan data
+        if (!referralDoc.exists()) {
+            console.log(`No referral found for ${referralUser}`);
+        } else {
+            const referredUsers = referralDoc.data().users;
+
+            const isAlreadyReferred = referredUsers.some((user) => user.id === parseInt(referralUser));
+            if (isAlreadyReferred) {
+                return;
+            }
+        }
+
         // jika total referrals melebihi dari 1
         if (totalReferrals > 0) {
             // dari firestore, kalau ada data yang sama, ga bakal di add.
+            console.log(`#2 Adding referral for ${referralUser}`);
             await updateDoc(referralUserRef, {
-                "users" : arrayUnion({
+                "users": arrayUnion({
                     id: ctx.chat.id,
-                    username : ctx.chat.username,
-                    profilePhoto : profilePhotoLink
+                    username: ctx.chat.username,
+                    profilePhoto: profilePhotoLink
                 })
-            }, { merge: true}).then(() => console.log("berhasil merge")
-        ).catch((e) => console.log(e));
-        //tambah biasa
+            }, { merge: true }).then(() => console.log("berhasil merge")
+            ).catch((e) => {
+                console.log("Error arrayUnion: ", e);
+            });
+            //tambah biasa
         } else {
+            console.log(`#1 Adding referral for ${referralUser}`);
             await setDoc(referralUserRef, {
-                "users" : [{
+                "users": [{
                     id: ctx.chat.id,
-                    username : ctx.chat.username,
-                    profilePhoto : profilePhotoLink
+                    username: ctx.chat.username,
+                    profilePhoto: profilePhotoLink
                 }]
+            }).then(() => console.log(`Added referral for ${referralUser}`)).catch((e) => {
+                console.log("Error setdoc: ", e);
             })
         }
     } catch (e) {
-        console.log(e);
+        console.log("Error addReferral:", e);
     }
 }
 
@@ -84,9 +108,10 @@ bot.start((ctx) => {
     const user = ctx;
     let referralUserId = ctx.payload;
 
+    console.log(ctx.payload);
+
     if (ctx.payload.length > 0 && ctx.payload != "") {
         referralUserId = referralUserId.substring(5);
-        console.log("Masuk referral : ", referralUserId);
         // getUserProfilePictureLink(ctx, ctx.chat.id);
         addReferral(ctx, referralUserId);
     }

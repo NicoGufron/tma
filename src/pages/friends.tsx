@@ -57,7 +57,7 @@ function Friends() {
 
     return (
         <>
-            <div className={"bg-[#FFFEDF] min-h-screen flex flex-col text-black"}>
+            <div className={"friends bg-[#FFFEDF] min-h-screen flex flex-col text-black"}>
                 <h3 className={"font-bold text-lg mt-8"}>Invite Friends!</h3>
                 <div className={"px-4"}>
 
@@ -74,7 +74,7 @@ function Friends() {
                             <Button
                                 onClick={() => {
                                     /// Disable untuk desktop web
-                                    utils.shareURL(`https://t.me/my_tma_bot/join?start=tmaId${userId}`, "Yahooooooo");
+                                    utils.shareURL(`https://t.me/my_tma_bot?start=tmaId${userId}`, "Yahooooooo");
                                 }
                                 }
                                 className={"w-full rounded-lg p-4 mt-4 mx-4 font-bold border-solid border-2 border-black bg-[#CA3A3A] text-white"}
@@ -89,7 +89,7 @@ function Friends() {
                         <div className={"w-full flex flex-col my-4 list-none"}>
                             {friends.length === 0 ? (<p className={"text-center"}>You have no friends</p>) : friends.map(friend => (
                                 <li className={"flex flex-row items-center text-left border-2 border-[#A0937D] rounded-lg bg-[#F8EDE3] font-bold p-4 my-2 text-black"} key={friend.id}>
-                                    <img src={friend.profilePhoto} className={"rounded-full mr-4 bg-cover"} width={"50"} height={"50"}/>
+                                    <img src={friend.profilePhoto} className={"rounded-full mr-4 bg-cover"} width={"40"} height={"40"}/>
                                     {friend.username}
                                 </li>
                             ))}

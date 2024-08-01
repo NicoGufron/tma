@@ -6,6 +6,7 @@
 
 body {
   font-family: "Prompt", sans-serif;
+  scroll-behavior: smooth;
 }
 
 @keyframes float {
@@ -32,4 +33,10 @@ body {
   width: 100%;
   height: 100%;
   background: radial-gradient(circle, #D9B01C, #FFFEDF 60%);
+}
+
+.friends {
+  height: 100vh;
+  overflow-y: scroll;
+  padding-bottom: 4rem;
 }
