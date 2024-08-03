@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, getDoc, setDoc, doc } from 'firebase/firestore';
+import { getFirestore, getDoc, setDoc, doc, collection, getDocs } from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_KEY,
@@ -54,4 +54,25 @@ const getReferralsFromId = async (id : string) => {
     }
 }
 
-export { getBalanceFromId, addDataToFirestore, getReferralsFromId }
+const getTasks = async () => {
+    const docRef = collection(db, "tasks");
+    const docSnap = await getDocs(docRef);
+
+    if (!docSnap.empty) {
+        return docSnap.docs.map(doc => ({
+            taskId: doc.data().taskId,
+            title : doc.data().title,
+            subtitle: doc.data().subtitle,
+            rewards: doc.data().rewards,
+            description: doc.data().description
+        }));
+    } else {
+        return 0;
+    }
+}
+
+// const checkTaskAndComplete = async (userId: string, taskId : string) => {
+//     const docRef = doc(db, "userProgress", `tmaId${userId}`);
+// }
+
+export { getBalanceFromId, getTasks, addDataToFirestore, getReferralsFromId }
