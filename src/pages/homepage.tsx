@@ -59,7 +59,7 @@ function Homepage() {
         if (!loading) {
 
             const interval = setInterval(() => {
-                setPoints((prevPoints) => Math.min(prevPoints + 0.00001, 999999));
+                setPoints((prevPoints) => Math.min(prevPoints + 0.00001, Infinity));
             }, 100);
 
             return () => clearInterval(interval);
@@ -103,7 +103,7 @@ function Homepage() {
                         <div className={"fixed bottom-4 left-0 w-full px-4 pb-16 z-10"}>
                             <Button
                                 disableRipple
-                                className={"rounded-lg cursor-pointer w-full bg-[#CA3A3A] text-white text-sm font-bold my-4 py-4 h-15 border-1 border-black"}
+                                className={"rounded-lg cursor-pointer w-full bg-[#CA3A3A] text-white text-sm font-bold my-4 py-4 border-1 border-black"}
                                 style={{ boxShadow: "0px 4px black", letterSpacing: "0.35px" }}
                                 onClick={() => {
                                     claimEarnings(points)

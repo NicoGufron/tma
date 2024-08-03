@@ -80,14 +80,14 @@ function Friends() {
                                 className={"w-full rounded-lg p-4 mt-4 mx-4 font-bold border-solid border-2 border-black bg-[#CA3A3A] text-white"}
                                 style={{ boxShadow: "0px 4px #000000" }}
                             >
-                                <FontAwesomeIcon icon={faShare}></FontAwesomeIcon>Share Your Referral Link
+                                <FontAwesomeIcon icon={faShare}></FontAwesomeIcon><p className={"text-md"}>Share Your Referral Link</p>
                             </Button>
                         </div>
                     </div>
                     <div className={"flex flex-col items-start"}>
-                        <h3 className={"text-lg font-bold"}>List of Meows</h3>
+                        <h3 className={"text-lg font-bold"}>List of Friends</h3>
                         <div className={"w-full flex flex-col my-4 list-none"}>
-                            {friends.length === 0 ? (<p className={"text-center"}>You have no friends</p>) : friends.map(friend => (
+                            {friends.length === 0 ? (<p className={"text-center text-md"}>You have no friends</p>) : friends.map(friend => (
                                 <li className={"flex flex-row items-center text-left border-2 border-[#A0937D] rounded-lg bg-[#F8EDE3] font-bold p-4 my-2 text-black"} key={friend.id}>
                                     <img src={friend.profilePhoto} className={"rounded-full mr-4 bg-cover"} width={"40"} height={"40"}/>
                                     {friend.username}
