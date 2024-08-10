@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, getDoc, setDoc, doc, collection, getDocs } from 'firebase/firestore';
+import { getFirestore, getDoc, setDoc, doc, collection, getDocs, Timestamp, updateDoc, arrayUnion } from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_KEY,
@@ -71,8 +71,58 @@ const getTasks = async () => {
     }
 }
 
+/// Buat pengecekan hari yang sama
+const isSameDay = (timestamp1 : Timestamp, timestamp2 : Timestamp) => {
+    const date1 = new Date(timestamp1.seconds * 1000);
+    const date2 = new Date(timestamp2.seconds * 1000);
+
+    return date1.toDateString() === date2.toDateString();
+}
+
+const dailyCheckIn = async (userId : string) => {
+    try {
+        const userProgressRef = doc(db, 'userProgress', `tmaId${userId}`);
+        const userProgressDoc = await getDoc(userProgressRef);
+
+        const now = Timestamp.now();
+        if (!userProgressDoc.exists()) {
+            await updateDoc(userProgressRef, {
+                completedTasks: arrayUnion("dailyCheckIn"),
+                lastCheckIn: now,
+                rewards: 1,
+            });
+            console.log(`User ${userId} has logged in`);
+        } else {
+            const userProgress = userProgressDoc.data();
+            const lastCheckIn = userProgress.lastCheckIn;
+
+            if (lastCheckIn && isSameDay(lastCheckIn, now)) {
+
+                /// TODO harus ubah button jadi disable kalo checkin udah berhasil
+                console.log("Already checked in");
+                return true;
+            }
+
+            await updateDoc(userProgressRef, {
+                completedTasks: arrayUnion("dailyCheckIn"),
+                lastCheckIn: now,
+                rewards: (userProgress.rewards || 0) + 1
+            })
+            console.log(`User ${userId} has checked in today and earned extra reward`);
+        }
+
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+const checkTask = async (taskId : string, userId : string) => {
+
+
+}
+
 // const checkTaskAndComplete = async (userId: string, taskId : string) => {
 //     const docRef = doc(db, "userProgress", `tmaId${userId}`);
 // }
 
-export { getBalanceFromId, getTasks, addDataToFirestore, getReferralsFromId }
+export { getBalanceFromId, getTasks, addDataToFirestore, getReferralsFromId, dailyCheckIn }
