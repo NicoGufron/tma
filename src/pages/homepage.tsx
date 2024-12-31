@@ -16,7 +16,7 @@ function Homepage() {
     const [progress, setProgress] = useState(0);
     // const [points, setPoints] = useState(0.00000);
     const [isPicking, setIsPicking] = useState(false);
-    const [referralCount, setReferralCount] = useState(0);
+    const [referralCount] = useState(0);
     const [tasks] = useState({
         twitter: false,
         instagram: false,
@@ -30,7 +30,7 @@ function Homepage() {
 
     const webAppUser = WebApp.initDataUnsafe.user;
 
-    setReferralCount(0);
+    // setReferralCount(0);
 
     // const claimEarnings = async (earnings: number) => {
     //     // setPoints(0.00000);
