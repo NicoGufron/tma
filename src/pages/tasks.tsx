@@ -2,8 +2,8 @@ import "../index.css";
 import BottomNav from "../components/BottomNav";
 import { useEffect, useState } from "react";
 import { Task } from "../components/Task";
-import { getTasks } from "../utils/functions";
-import WebApp from "@twa-dev/sdk";
+// import { getTasks } from "../utils/functions";
+// import WebApp from "@twa-dev/sdk";
 
 function Tasks() {
 
@@ -15,7 +15,7 @@ function Tasks() {
         description: string
     }
 
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const [tasks, setTasks] = useState<TaskData[]>([]);
 
     /// Buat testing

@@ -1,23 +1,23 @@
 import { useState, useEffect } from "react";
-import { Button, CircularProgress } from "@nextui-org/react";
-import { addDataToFirestore, getBalanceFromId } from "../utils/functions";
+import { CircularProgress } from "@nextui-org/react";
+import { getBalanceFromId } from "../utils/functions";
 
-import notcoin from '../assets/notcoin.png';
+// import notcoin from '../assets/notcoin.png';
 import WebApp from "@twa-dev/sdk";
 
 import '../App.css'
 import '../index.css';
-import BottomNav from "../components/BottomNav";
+// import BottomNav from "../components/BottomNav";
 
 function Homepage() {
 
     const [boogAmount, setBoogAmount] = useState(0.00000);
     const [loading, setLoading] = useState(false);
     const [progress, setProgress] = useState(0);
-    const [points, setPoints] = useState(0.00000);
+    // const [points, setPoints] = useState(0.00000);
     const [isPicking, setIsPicking] = useState(false);
     const [referralCount, setReferralCount] = useState(0);
-    const [tasks, setTasks] = useState({
+    const [tasks] = useState({
         twitter: false,
         instagram: false,
         telegram: false,
@@ -30,13 +30,15 @@ function Homepage() {
 
     const webAppUser = WebApp.initDataUnsafe.user;
 
-    const claimEarnings = async (earnings: number) => {
-        setPoints(0.00000);
-        setBoogAmount(boogAmount + earnings);
-        // await addDataToFirestore("1", "Ocinawa", boogAmount);
+    setReferralCount(0);
 
-        await addDataToFirestore(`${webAppUser?.id}`, `${webAppUser?.username}`, boogAmount + earnings);
-    }
+    // const claimEarnings = async (earnings: number) => {
+    //     // setPoints(0.00000);
+    //     setBoogAmount(boogAmount + earnings);
+    //     // await addDataToFirestore("1", "Ocinawa", boogAmount);
+
+    //     await addDataToFirestore(`${webAppUser?.id}`, `${webAppUser?.username}`, boogAmount + earnings);
+    // }
 
     useEffect(() => {
         setLoading(true);
@@ -72,10 +74,10 @@ function Homepage() {
 
         //     return () => clearInterval(interval);
         // }
+        
         if (!loading) {
-            let interval;
             if (isPicking) {
-                interval = setInterval(() => {
+                setInterval(() => {
                     setBoogAmount(prev => Number((prev + pickingRate).toFixed(3)))
                 }, 5000);
             }

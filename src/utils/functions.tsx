@@ -116,10 +116,10 @@ const dailyCheckIn = async (userId : string) => {
     }
 }
 
-const checkTask = async (taskId : string, userId : string) => {
+// const checkTask = async (taskId : string, userId : string) => {
 
 
-}
+// }
 
 // const checkTaskAndComplete = async (userId: string, taskId : string) => {
 //     const docRef = doc(db, "userProgress", `tmaId${userId}`);

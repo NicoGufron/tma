@@ -1,8 +1,8 @@
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Button, CircularProgress } from "@nextui-org/react";
+// import { Button, CircularProgress } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-import { dailyCheckIn } from "../utils/functions";
+// import { dailyCheckIn } from "../utils/functions";
 
 import { Sheet } from 'react-modal-sheet';
 
@@ -10,28 +10,28 @@ function Task(props : any) {
 
     const [loading, setLoading] = useState(false);
     const [isOpen, setOpen] = useState(false);
-    const [checkedIn, setCheckedIn] = useState(false);
-    const userId = '2111410917';
+    // const [checkedIn, setCheckedIn] = useState(false);
+    // const userId = '2111410917';
 
-    const handleTask = async (taskId : string, userId : string) => {
-        console.log(`Handle task clicked: ${taskId}`)
-        switch (taskId) {
-            case 'taskDaily':
-                /// Buat Testing
-                console.log("Daily task");
-                dailyCheckIn(userId);
-                setCheckedIn(true);
-                setLoading(false);
+    // const handleTask = async (taskId : string, userId : string) => {
+    //     console.log(`Handle task clicked: ${taskId}`)
+    //     switch (taskId) {
+    //         case 'taskDaily':
+    //             /// Buat Testing
+    //             console.log("Daily task");
+    //             dailyCheckIn(userId);
+    //             setCheckedIn(true);
+    //             setLoading(false);
 
-                /// Kode asli
-                // dailyCheckIn(taskId).then((value) => {
-                // });
-                break;
-            default:
-                console.log("Misc task");
-                break;
-        }
-    }
+    //             /// Kode asli
+    //             // dailyCheckIn(taskId).then((value) => {
+    //             // });
+    //             break;
+    //         default:
+    //             console.log("Misc task");
+    //             break;
+    //     }
+    // }
 
     useEffect(() => {
         if (loading) {
@@ -51,7 +51,7 @@ function Task(props : any) {
                 </div>
                 <div className={"flex flex-row"}>
 
-                    <Button disableRipple
+                    {/* <Button disableRipple
                         className={checkedIn === true ? "rounded-lg cursor-pointer w-full bg-[#FAFAFA] text-black text-sm font-bold border-2 border-solid border-black" :  "rounded-lg cursor-pointer w-full bg-[#CA3A3A] text-white text-sm font-bold border-2 border-solid border-black"}
                         style={{ boxShadow: "0px 4px black", letterSpacing: "0.35px" }}
                         onClick={() => {
@@ -61,7 +61,7 @@ function Task(props : any) {
                         }}
                     >
                         {loading ? <CircularProgress color={"default"} size={"sm"}></CircularProgress> : checkedIn === true ? <p>Claimed</p> : <p>Check</p>}
-                    </Button>
+                    </Button> */}
 
                     <Sheet 
                         isOpen={isOpen} 
