@@ -72,14 +72,14 @@ function Tasks() {
     }, []);
 
     return (
-        <div className={"flex flex-col bg-[#FFFEDF] h-full min-h-screen"}>
-            <div className="mt-8 overflow-y-scroll">
+        <div className={"flex flex-col bg-[#FFFEDF] h-full min-h-screen pt-8"}>
+            {/* <div className="mt-8"> */}
                 <span className={"flex flex-row items-center justify-center"}>
                     <img src={stars} width={"18"}></img>
                     <h3 className={"px-4 font-bold text-lg"}>Complete Tasks!</h3>
                     <img src={stars} width={"18"}></img>
                 </span>
-                <div className={"flex flex-col py-4 m-4"}>
+                <div className={"flex flex-col py-4 m-4 overflow-auto"}>
                     <p className={"font-bold text-left text-md"}>Tasks</p>
                     <div className={"h-96"}>
                         {tasks.length === 0 ? (<p>You have no tasks</p>) : tasks.map(task => (
@@ -94,7 +94,7 @@ function Tasks() {
                         ))}
                     </div>
                 </div>
-            </div>
+            {/* </div> */}
             <BottomNav></BottomNav>
         </div>
 

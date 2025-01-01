@@ -92,9 +92,9 @@ function Homepage() {
 
     return (
         <>
-            <div style={{backgroundColor: "#FFFEDF"}} className="doodle">
+            <div style={{backgroundColor: "#FFFEDF"}} className="doodle h-full min-h-screen">
                 {loading ?
-                    <div className={"flex flex-col min-h-screen items-center justify-center"}>
+                    <div className={"flex flex-col items-center justify-center"}>
                         <CircularProgress size="lg" value={progress} showValueLabel></CircularProgress>
                         <p className='mt-10 text-center text-lg font-bold'>Loading...</p>
                     </div>
