@@ -64,7 +64,8 @@ const getTasks = async () => {
             title : doc.data().title,
             subtitle: doc.data().subtitle,
             rewards: doc.data().rewards,
-            description: doc.data().description
+            description: doc.data().description,
+            type: doc.data().type,
         }));
     } else {
         return 0;

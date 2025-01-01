@@ -21,6 +21,7 @@
     "@tma.js/sdk": "^2.6.1",
     "@twa-dev/sdk": "^7.0.0",
     "@vitejs/plugin-basic-ssl": "^1.1.0",
+    "doodle.css": "^0.0.2",
     "dotenv": "^16.4.5",
     "firebase": "^10.12.3",
     "framer-motion": "^11.2.10",

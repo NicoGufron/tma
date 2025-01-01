@@ -1,10 +1,8 @@
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-// import { Button, CircularProgress } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-// import { dailyCheckIn } from "../utils/functions";
 
 import { Sheet } from 'react-modal-sheet';
+
+import 'doodle.css/doodle.css';
 
 function Task(props : any) {
 
@@ -40,14 +38,20 @@ function Task(props : any) {
     }, [])
 
     return (
-        <div className={"flex flex-col border-2 border-solid border-[#A0937D] rounded-lg mt-5"}>
-            <div className={"w-full flex flex-row p-2 py-4 justify-between"}>
-                <div className={"flex flex-row items-center"}>
-                    <FontAwesomeIcon icon={faCheckCircle} color="#CA3A3A" className={"p-2 border-1 border-solid"}></FontAwesomeIcon>
-                    <div className={"flex flex-col items-start"}>
-                        <p className={"text-md font-medium"} style={{fontSize: "14px"}}>{props.title}</p>
-                        <p style={{fontSize: "10px"}}>{props.subtitle}</p>
+        <div className={"flex flex-col rounded-lg mt-5"}>
+            <div className={"doodle-border p-2"}>
+                <div className={"flex items-center justify-between"}>
+                    <div className={"flex flex-col items-start pl-2"}>
+                        <p className={"text-md font-bold text-sm"}>{props.title}</p>
+                        <p className={"text-green-600 font-bold text-xs"}>{props.subtitle}</p>
                     </div>
+                    {props.type === 'social' ? <a href={props.description}>
+                        <button className={"doodle-border text-xs font-bold"}>{"Follow"}</button>
+                    </a> : null}
+                    {/* <a href={props.description}>
+                        <button className={"doodle-border text-xs font-bold"}>{"Check"}</button>
+                    </a> */}
+                    {/* <img src={success} className="w-6"></img> */}
                 </div>
                 <div className={"flex flex-row"}>
 

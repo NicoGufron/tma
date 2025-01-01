@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 import { CircularProgress } from "@nextui-org/react";
 import { getBalanceFromId } from "../utils/functions";
 
-// import notcoin from '../assets/notcoin.png';
 import WebApp from "@twa-dev/sdk";
 
 import '../App.css'
 import '../index.css';
-// import BottomNav from "../components/BottomNav";
+import 'doodle.css/doodle.css';
+import BottomNav from "../components/BottomNav";
 
 function Homepage() {
 
@@ -57,7 +57,7 @@ function Homepage() {
         if (!loading) {
             getBalanceFromId(`${webAppUser?.id}`).then((value) => {
                 if (value !== "" || value !== "undefined") {
-                    setBoogAmount(value);
+                    // setBoogAmount(value);
                 } else {
                     WebApp.showAlert("Something went wrong, please try again later.")
                 }
@@ -77,12 +77,13 @@ function Homepage() {
         
         if (!loading) {
             if (isPicking) {
-                setInterval(() => {
+                const interval = setInterval(() => {
                     setBoogAmount(prev => Number((prev + pickingRate).toFixed(3)))
                 }, 5000);
+                return () => clearInterval(interval);
             }
-            // return () => clearInterval(interval);
         }
+
     }, [isPicking, pickingRate]);
 
     const taskRewards = (tasks.twitter ? 25 : 0) + 
@@ -91,32 +92,30 @@ function Homepage() {
 
     return (
         <>
-            <div>
+            <div style={{backgroundColor: "#FFFEDF"}} className="doodle">
                 {loading ?
                     <div className={"flex flex-col min-h-screen items-center justify-center"}>
                         <CircularProgress size="lg" value={progress} showValueLabel></CircularProgress>
                         <p className='mt-10 text-center text-lg font-bold'>Loading...</p>
                     </div>
                     :
-                    <div className="p-4">
-
+                    <div className="p-4 pt-8 flex flex-col items-center justify-between">
                         <div className="text-center mb-8">
-                            <div className={`w-32 h-32 mx-auto bg-green-400 rounded-full mb-4 
+                            <div className={`w-24 h-24 mx-auto bg-green-400 rounded-full mb-4 
                         ${isPicking ? 'animate-bounce' : ''} relative overflow-hidden`}>
                                 <div className="absolute inset-0 flex items-center justify-center">
-                                    <div className="text-4xl">🤧</div>
+                                    <div className="text-3xl">🤧</div>
                                 </div>
                             </div>
-                            <div className="text-2xl font-bold text-green-800">
+                            <div className="text-2xl font-bold">
                                 {boogAmount.toFixed(3)} $BOOG
                             </div>
-                            <p className="text-sm text-green-600">Picked this session</p>
+                            <p className="text-sm">Picked this session</p>
                         </div>
                         <button
                             onClick={() => setIsPicking(!isPicking)}
-                            className={`w-full py-4 rounded-xl font-bold text-white mb-6
-                                ${isPicking ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'}
-                                transition-colors`
+                            style={{backgroundColor:"white"}}
+                            className={`p-2 rounded-xl font-bold text-white mb-6`
                             }
                         >
                             <span className="flex items-center justify-center gap-2">
@@ -127,29 +126,31 @@ function Homepage() {
 
                         {/* Stats Grid */}
                         <div className="grid grid-cols-2 gap-4 mb-6">
-                            <div className="bg-white p-4 rounded-xl shadow-sm">
-                                <p className="text-sm text-green-600">Base Rate</p>
-                                <p className="text-lg font-bold text-green-800">{baseRate} /5s</p>
+                            <div className="doodle-border bg-white py-4 rounded-xl shadow-sm">
+                                <p className="text-sm">Base Rate</p>
+                                <p className="text-sm font-bold text-green-800">+{baseRate} / 5s</p>
                             </div>
-                            <div className="bg-white p-4 rounded-xl shadow-sm">
-                                <p className="text-sm text-green-600">Bonus Rate</p>
-                                <p className="text-lg font-bold text-green-800">
-                                    +{(referralCount * baseRate).toFixed(3)} /5s
+                            <div className="doodle-border bg-white py-4 rounded-xl shadow-sm">
+                                <p className="text-sm">Bonus Rate</p>
+                                <p className="text-sm font-bold text-green-800">
+                                    +{(referralCount * baseRate).toFixed(3)} / 5s
                                 </p>
                             </div>
                         </div>
                         {/* Quick Stats */}
-                        <div className="bg-white p-4 rounded-xl shadow-sm mb-4">
+                        <div className="doodle-border bg-white p-4 rounded-xl shadow-sm mb-4">
                             <div className="flex justify-between mb-2">
-                                <span className="text-green-600">Task Rewards</span>
-                                <span className="font-bold text-green-800">{taskRewards} $BOOG</span>
+                                <span className="text-sm">Task Rewards</span>
+                                <span className="text-sm px-4 font-bold text-green-800">{taskRewards} $BOOG</span>
                             </div>
                             <div className="flex justify-between">
-                                <span className="text-green-600">Referral Bonus</span>
-                                <span className="font-bold text-green-800">{referralCount}x Rate</span>
+                                <span className="text-sm">Referral Bonus</span>
+                                <span className="text-sm px-4 font-bold text-green-800">{referralCount}x Rate</span>
                             </div>
                         </div>
+                        <BottomNav></BottomNav>
                     </div>
+
                     // Original code
                     // <div className={"bg-gradient-main min-h-screen flex flex-col items-center justify-between text-black"}>
                     //     <div className={"absolute inset-0 h-1/2 bg-gradient-overlay z-0"}></div>
