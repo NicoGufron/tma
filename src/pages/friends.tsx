@@ -61,7 +61,7 @@ function Friends() {
 
     return (
         <>
-            <div className={"friends min-h-screen bg-[#FFFEDF] flex flex-col text-black"}>
+            <div className={"friends pb-16 h-full bg-[#FFFEDF] flex flex-col text-black"}>
                 <span className={"flex flex-row items-center justify-center mt-8"}>
                     <img src={stars} width={"18"}></img>
                     <h3 className={"px-4 font-bold text-lg"}>Invite Friends!</h3>
@@ -97,9 +97,9 @@ function Friends() {
                         <div className={"w-full flex flex-col items-center my-2 list-none"}>
                             {friends.length === 0 ? <img style={{border:"none"}} className="w-12 my-5" src={skull}></img> : null} 
                             {friends.length === 0 ? (<p className={"text-center text-md font-bold"}>You have no friends</p>) : friends.map(friend => (
-                                <li className={"flex flex-row items-center text-left border-2 border-[#A0937D] rounded-lg bg-[#F8EDE3] font-bold p-4 my-2 text-black"} key={friend.id}>
-                                    <img src={friend.profilePhoto} className={"rounded-full mr-4 bg-cover"} width={"40"} height={"40"}/>
-                                    {friend.username}
+                                <li className={"doodle-border w-full flex flex-row items-center text-left p-2 bg-[#F8EDE3] font-bold text-black"} key={friend.id}>
+                                    <img src={friend.profilePhoto} style={{border: "none"}} className={"rounded-full mr-4 bg-cover"} width={"40"} height={"40"}/>
+                                    <p className={"text-sm"}>{friend.username}</p>
                                 </li>
                             ))}
                         </div>

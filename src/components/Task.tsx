@@ -45,7 +45,7 @@ function Task(props : any) {
                         <p className={"text-md font-bold text-sm"}>{props.title}</p>
                         <p className={"text-green-600 font-bold text-xs"}>{props.subtitle}</p>
                     </div>
-                    {props.type === 'social' ? <a href={props.description}>
+                    {props.type === 'social' ? <a href={props.description} target="_blank">
                         <button className={"doodle-border text-xs font-bold"}>{"Follow"}</button>
                     </a> : null}
                     {/* <a href={props.description}>

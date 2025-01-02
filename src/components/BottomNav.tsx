@@ -6,7 +6,7 @@ import 'doodle.css/doodle.css';
 function BottomNav() {
     return (
         <>
-            <div className={"absolute bottom-0 w-full flex justify-between gap-2 z-10"} style={{ borderTop: "2px solid #A0937D" }}>
+            <div className={"fixed bottom-0 w-full flex justify-between gap-2 z-10"} style={{ borderTop: "2px solid #A0937D" }}>
                 <div className={"flex-grow flex items-center w-full font-medium"}>
                     <div className={"w-full bg-[#FFFEDF] text-[#03346E] py-4 flex justify-evenly items-baseline"}>
                         <button className={"doodle-border px-2 items-center gap-1"}>

@@ -81,7 +81,7 @@ function Tasks() {
                 </span>
                 <div className={"flex flex-col py-4 m-4 overflow-auto"}>
                     <p className={"font-bold text-left text-md"}>Tasks</p>
-                    <div className={"h-96"}>
+                    <div className={"h-full pb-16"}>
                         {tasks.length === 0 ? (<p>You have no tasks</p>) : tasks.map(task => (
                             <Task
                                 key={task.taskId}
